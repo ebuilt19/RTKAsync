@@ -10,38 +10,21 @@ export const getUserObjSlice = createSlice({
   },
   reducers: {
     getObj : (state, action) => {
-      state.value = action.payload;
-      state.name = action.payload;
-      state.token = action.payload;
+        // console.log(action.payload,"action");
+        // let c = JSON.parse(action.payload);
+      
+      state.value =  JSON.parse(action.payload).value;
+      state.name =  JSON.parse(action.payload).name;
+      state.token =  JSON.parse(action.payload).token;
         },
+    incrementByAmount : (state, action) => {
+        state.value = action.payload;
+          },
   },
   });
-export const getIdSlice = createSlice({
-  name: 'getId',
-  initialState: {
-    value: 0,
-    name:"",
-  },
-  reducers: {
-    increment: state => {
-      // Redux Toolkit allows us to write "mutating" logic in reducers. It
-      // doesn't actually mutate the state because it uses the Immer library,
-      // which detects changes to a "draft state" and produces a brand new
-      // immutable state based off those changes
-      state.value += 1;
-    },
-    decrement: state => {
-      state.value -= 1;
-    },
-    incrementByAmount: (state, action) => {
-      state.value += action.payload;
-    },
-    
-  },
-});
 
-export const { increment, decrement, incrementByAmount } = getIdSlice.actions;
-export const {getObj} = getUserObjSlice.actions;
+
+export const {getObj,incrementByAmount} = getUserObjSlice.actions;
 
 export const myObjAsync = amount => dispatch =>{
   let tes = async (passedInAmount)=>{
@@ -49,7 +32,10 @@ export const myObjAsync = amount => dispatch =>{
       "https://thespaht.com/testing/redux.php?amount="+`${passedInAmount}` 
       );
                       //action          //payload
-      dispatch(incrementByAmount((await response).data));
+    //   dispatch(incrementByAmount((await response).data));
+    let responseData = await response.data;
+    let payload = JSON.stringify({value:responseData,name:"fof",token:"none"})
+    dispatch(getObj(payload));
     }
     tes(amount);
 }
@@ -78,7 +64,5 @@ export const incrementAsync = amount => dispatch => {
 // The function below is called a selector and allows us to select a value from
 // the state. Selectors can also be defined inline where they're used instead of
 // in the slice file. For example: `useSelector((state) => state.counter.value)`
-export const selectCount = state => state.getId.value;
-export const selectObjUser = state => state.getObj;
-export const getUserObj = getUserObjSlice.reducer;
-export default getIdSlice.reducer;
+export const selectObjUser = state => state.getUserObj.value;
+export default getUserObjSlice.reducer;

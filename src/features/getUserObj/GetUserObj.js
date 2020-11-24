@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import {
-  decrement,
-  increment,
+
   incrementByAmount,
   incrementAsync,
-  selectCount,
+//   selectCount,
   selectObjUser,
   myAsync,
   myObjAsync,
-} from './getIdSlice';
+} from './getUserObjSlice';
+
 import styles from '../counter/Counter.module.css';
 
-export function GetId() {
-  const count = useSelector(selectCount);
+export function GetUserObj() {
+//   const count = useSelector(selectCount);
   const objUser = useSelector(selectObjUser)
   const dispatch = useDispatch();
   const [incrementAmount, setIncrementAmount] = useState('2');
@@ -24,17 +24,17 @@ export function GetId() {
         <button
           className={styles.button}
           aria-label="Increment value"
-          onClick={() => dispatch(increment())}
+        //   onClick={() => dispatch(increment())}
         >
           +
         </button>
-        <span className={styles.value}>{count}</span>
+        {/* <span className={styles.value}>{count}</span> */}
         
         <span className={styles.value}>{objUser}</span>
         <button
           className={styles.button}
           aria-label="Decrement value"
-          onClick={() => dispatch(decrement())}
+        //   onClick={() => dispatch(decrement())}
         >
           -
         </button>
